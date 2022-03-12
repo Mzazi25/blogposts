@@ -1,38 +1,32 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/"> Pitches </a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                  <li><a href="{{url_for('main.index')}}">Home</a></li>
-                    
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                  {% if current_user.is_authenticated %}
-                  <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
-                  <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
-                  {% else %}
-                  <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-                  {%endif%}
-                </ul>
-            </div>
-
-        </div>
+<!-- {% block navbar %} -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  {% if name %}
+    <div class="container-fluid">
+      <a class="navbar-brand" id="mybrand" href="#">
+        Hello <span class="br"> {{name}}</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+        <a id="gits" class="btn btn-primary" href="/" role="button">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></i></a>
+      </div>
+      {% else %}
+      <div class="container-fluid">
+      <a class="navbar-brand" id="mybrand" href="#">
+        Insight<span class="br"> Groove</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+        <ul class="navbar-nav">
+          <a id="gits" class="btn btn-primary" href="/login" role="button">Login <i class="fa fa-user" aria-hidden="true"></i></i></a>
+        </ul>
+      </div>
+      <!-- {% endif %} -->
     </div>
-  </body>
-</html>
+  </nav>
+<!-- {% endblock %} -->

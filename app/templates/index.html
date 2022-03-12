@@ -1,14 +1,69 @@
-{% import 'macros.html' as macro %}
-{% block source %}
-<div class="container">
-    <h1>Top News</h1>
+{% extends 'base.html' %}
+{% block content %}
+<section>
+
+    <div class="d-flex container-fluid" lc-helper="background"
+        style="height:50vh;background:url(../static/img/bg/2.jpg)  center / cover no-repeat;">
     </div>
-   
-    {{ macro.displayNewsSources(sources)}}
+    <div class="container p-5 bg-light" style="margin-top:-100px">
+        <div class="row">
+            <div class="col-md-4 text-center align-self-center">
+                <div class="lc-block border-end border-2 ">
+                    <div editable="rich">
+                        <p class="display-4 text-secondary"><span class="br">Look!</span></p>
+                    </div>
+                </div><!-- /lc-block -->
+            </div><!-- /col -->
+            <div class="col-md-8">
+                <div class="lc-block ">
+                    <div editable="rich">
+                        <p class="display-4">You are not going to master the rest of your life in one day. Just relax.
+                        </p>
+                    </div>
+                </div><!-- /lc-block -->
+            </div><!-- /col -->
+        </div>
+        <h4>
     </div>
-
-
-</div>
-
-
+</section>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron" id="cont">
+                    <div class="one">
+                        <p class="f-1"><i class="far fa-user" style="color: #f95630;"></i> {{user.username}}</p>
+                       
+        
+                        {{blog.message}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+               <div class="pro">
+                   <h5>Blog Comments</h5>
+                {% for likes in likes %}
+                <div class="jumbotron" id="chat">
+                   
+                   <div class="container darker">
+                    <p>{{likes.comment}}</p>
+                    <span class="time-left"><i class="far fa-clock"></i>
+                        <!-- {{likes.created_at.strftime('%B %d, %Y %I:%M')}}</span> -->
+                    <span class="time"> {{user.username}} <i class="fas fa-check-circle"></i></span>
+                  </div>
+                  
+                </div>
+                {% endfor %}
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
+ur

@@ -2,17 +2,17 @@ import urllib.request,json
 from .models import Blog, Quotes
 
 # Getting the Blog base url
-QUOTES_BASE_URL = None
+quotes_url = None
 
 def configure_request(app):
-    global QUOTES_BASE_URL
-    QUOTES_BASE_URL = app.config['QUOTES_BASE_URL']
+    global quotes_url
+    quotes_url = app.config['QUOTES_BASE_URL']
     
 def get_random_quotes():
     '''
     Function that returns json response to url request
     '''
-    get_random_quotes_url = QUOTES_BASE_URL
+    get_random_quotes_url = quotes_url
     print(get_random_quotes_url)
     with urllib.request.urlopen(get_random_quotes_url) as url:
         get_random_quotes_data = url.read()
