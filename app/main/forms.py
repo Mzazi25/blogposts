@@ -9,3 +9,6 @@ from wtforms import StringField,PasswordField,BooleanField,SubmitField,TextAreaF
 class UpdateProfile(FlaskForm):
     bio = TextAreaField('Tell us about you.',validators = [InputRequired()])
     submit = SubmitField('Submit')
+class BlogForm(FlaskForm):
+   message = StringField('message', widget=TextArea(), validators=[InputRequired()])
+   title = StringField('Blog Title',widget=TextArea(),validators=[InputRequired()])

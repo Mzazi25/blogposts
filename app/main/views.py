@@ -6,23 +6,14 @@ from ..models import User,Comment,Blog
 from .forms import UpdateProfile
 from .. import db,photos
 
-@main.route('/mainblog/<id>', methods=['GET', 'POST'])
-def maainblog(id):
+@main.route('/main/<id>', methods=['GET', 'POST'])
+def fail(id):
     likes = Comment.query.all()
     blog = Blog.query.filter_by(id=id).first()
     user = User.query.filter_by(id=blog.user_id).first()
     
     return render_template('index.html',user=user,blog=blog, likes=likes)
 
-
-@main.route('/user/<uname>')
-def profile(uname):
-    user = User.query.filter_by(username = uname).first()
-
-    if user is None:
-        abort(404)
-
-    return render_template("profile/profile.html", user = user)
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
