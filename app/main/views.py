@@ -1,26 +1,26 @@
 from flask import render_template,request,redirect,url_for,abort
 from .import main
-from ..requests import get_news,get_articles
+# from ..requests import 
 from flask_login import login_required, current_user
-from ..models import News, User, Review
-from .forms import UpdateProfile,ReviewForm
+from ..models import User
+from .forms import UpdateProfile
 from .. import db,photos
 
-@main.route('/',methods=[ 'POST','GET'])
-def index():
-    '''
-    View root page function that returns the index page and its data
-    '''
+# @main.route('/',methods=[ 'POST','GET'])
+# def index():
+#     '''
+#     View root page function that returns the index page and its data
+#     '''
 
-    data = {
-        "title":"News API",
-        "heading": "News"
-    }
-    sources = get_news()
-    articles= get_articles('creative')
+#     data = {
+#         "title":"News API",
+#         "heading": "News"
+#     }
+#     sources = get_news()
+#     articles= get_articles('creative')
     
     
-    return render_template('index.html',context=data,sources = sources,article=articles)
+#     return render_template('index.html',context=data,sources = sources,article=articles)
 
 
 @main.route('/user/<uname>')
@@ -66,21 +66,3 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-@main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
-@login_required
-def new_review(id):
-    form = ReviewForm()
-    articles = get_articles(id)
-    if form.validate_on_submit():
-        title = form.title.data
-        review = form.review.data
-
-        # Updated review instance
-        new_review = Review(news_id=id,news_title=title,news_review=review,user=current_user)
-
-        # save review method
-        new_review.save_review()
-        return redirect(url_for('.articles',id = id ))
-
-    title = f'{title} review'
-    return render_template('new_review.html',title = title, review_form=form, articles=articles)
