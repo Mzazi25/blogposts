@@ -17,6 +17,30 @@
                 </div>
                 <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename='photos/randomphoto.jpeg') }}" alt="">
             </div>
+           
+        
+                    <div class="col-md-12">
+                        <div class="alert alert-primary" role="alert">
+                            <h4 class="alert-heading">QUOTE OF THE DAY!!</h4>
+                            <p><i class="fas fa-quote-left" style="color: #ffdd19;"></i> {{quotes.quote}} <i
+                                    class="fas fa-quote-right" style="color: #ffdd19;"></i></p>
+                            <hr>
+                            <p class="mb-0" id="author"> <span class="br">By</span> {{quotes.author}}
+                            </p>
+                        </div>
+                        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename='image/photo.jpeg') }}" alt="">
+
+
+    
+                        
+                        
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+        </section>
         </div>
     </section>
     

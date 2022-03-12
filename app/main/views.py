@@ -20,7 +20,18 @@ def index():
     '''
     view root page function that returns indext.html and its data
     '''
-    return render_template('index.html')
+    quotes = get_random_quotes()
+    print(quotes)
+    likes = Comment.query.all()
+    form = CommentForm()
+    if form.validate_on_submit():
+        new_comment = Comment(comment=form.comment.data,users_id=current_user.id)
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    blog = Blog.query.all()
+    user = User.query.all()
+    return render_template('index.html',likes=likes,quotes=quotes, user=user,form=form,blog=blog)
 
 @main.route('/profile', methods=['GET', 'POST'])
 @login_required
@@ -41,7 +52,7 @@ def profile():
         db.session.add(new_blog)
         db.session.commit()
         return redirect(url_for('main.profile'))
-    return render_template('profile.html',form=form,name=current_user.username, blog=blog)
+    return render_template('profile/profile.html',form=form,name=current_user.username, blog=blog)
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
