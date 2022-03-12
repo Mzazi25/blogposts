@@ -1,19 +1,54 @@
 from flask import render_template,request,redirect,url_for,abort
 from .import main
-# from ..requests import Quot
+from ..requests import get_random_quotes
 from flask_login import login_required, current_user
 from ..models import User,Comment,Blog
-from .forms import UpdateProfile
-from .. import db,photos
+from .forms import UpdateProfile,BlogForm
+from .. import db,photos, login_manager
 
-@main.route('/main/<id>', methods=['GET', 'POST'])
-def fail(id):
-    likes = Comment.query.all()
-    blog = Blog.query.filter_by(id=id).first()
-    user = User.query.filter_by(id=blog.user_id).first()
+# creating an auth instance
+@login_manager.user_loader
+def load_user(user_id):
+        return User.query.get(int(user_id))
+
+login_manager.login_view = 'main.login'
+
+
+#views
+@main.route('/',methods=[ 'POST','GET'])
+def index():
+    '''
+    View root page function that returns the index page and its data
+    '''
+
+    data = {
+        "title":"News API",
+        "heading": "News"
+    }
+    sources = get_random_quotes()
     
-    return render_template('index.html',user=user,blog=blog, likes=likes)
+    
+    return render_template('index.html',context=data,sources = sources)
 
+@main.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    
+    # fetch data
+    blog = Blog.query.all()
+    form =BlogForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        message = form.message.data
+
+        new_blog = Blog(title=title, message=message,user_id=current_user.id)
+
+        # add data to db
+        db.session.add(new_blog)
+        db.session.commit()
+        return redirect(url_for('.profile'))
+    return render_template("profile/profile.html", form=form,name=current_user.username, blog=blog)
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
@@ -35,9 +70,6 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form)
 
-
-
-# Views
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(uname):
@@ -48,4 +80,3 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
-

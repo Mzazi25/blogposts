@@ -1,25 +1,14 @@
-{% extends 'base.html'%}
-{% block content %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-</head>
-<body>
-    <section class="bg-dark text-light p-5 text-center">
-        <div class="container-fluid">
-            <div class="d-sm-flex">
-                <div>
-                    <h1>Welcome to <span class="text-warning">60Seconds</span></h1>
-                    <p class="lead">Welcome to 60 Seconds where you can create Pitches</p>
-                </div>
-                <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename='photos/randomphoto.jpeg') }}" alt="">
-            </div>
-        </div>
-    </section>
-    
-</body>
-</html>
+{% import 'macros.html' as macro %}
+{% block source %}
+<div class="container">
+    <h1>Top News</h1>
+    </div>
+   
+    {{ macro.displayNewsSources(sources)}}
+    </div>
+
+
+</div>
+
+
 {% endblock %}
