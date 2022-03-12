@@ -66,3 +66,12 @@ class Comment(db.Model):
     blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id') )
     comment = db.Column(db.String(), unique=True, nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow(), nullable=False)
+
+class Quotes:
+    '''
+    class defines quotes objects
+    '''
+    def __init__(self, author, quote):
+        self.author = author
+        self.quote = quote
+    

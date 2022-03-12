@@ -1,26 +1,18 @@
 from flask import render_template,request,redirect,url_for,abort
 from .import main
-# from ..requests import 
+# from ..requests import Quot
 from flask_login import login_required, current_user
-from ..models import User
+from ..models import User,Comment,Blog
 from .forms import UpdateProfile
 from .. import db,photos
 
-# @main.route('/',methods=[ 'POST','GET'])
-# def index():
-#     '''
-#     View root page function that returns the index page and its data
-#     '''
-
-#     data = {
-#         "title":"News API",
-#         "heading": "News"
-#     }
-#     sources = get_news()
-#     articles= get_articles('creative')
+@main.route('/mainblog/<id>', methods=['GET', 'POST'])
+def maainblog(id):
+    likes = Comment.query.all()
+    blog = Blog.query.filter_by(id=id).first()
+    user = User.query.filter_by(id=blog.user_id).first()
     
-    
-#     return render_template('index.html',context=data,sources = sources,article=articles)
+    return render_template('index.html',user=user,blog=blog, likes=likes)
 
 
 @main.route('/user/<uname>')
