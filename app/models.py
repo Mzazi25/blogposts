@@ -9,26 +9,22 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(int(user_id))
    
-class Blog:
-    '''
-    Blog class to define Blog Objects
-    '''
+class Blog(db.Model):
+    __tablename__= "blogs"
 
-    def __init__(self,id,name,description,url,category,language):
-        self.id =id
-        self.name = name
-        self.description = description
-        self.url = url
-        self.category = category
-        self.language = language
-
+    id = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    title = db.Column(db.String(100), unique=True,nullable=False)
+    message = db.Column(db.String(), unique=True,nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow(), nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id') )
+    likes = db.relationship('Comment', backref='blogs', lazy='dynamic')
+    
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
