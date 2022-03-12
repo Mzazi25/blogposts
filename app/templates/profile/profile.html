@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <form action='/profile' method="POST">
+          {{ form.hidden_tag() }}
+        <label class="form-label" for="selectOne">Select Pitch Category</label>
+        {{form.category(class="form-control")}}
+        <span class="text-muted " style="font: size 12px;">Select the category of your pitch.
+          Choose from Football, Basketball, Tennis, Hockey
+          cannot be left null</span>
+          <br>
+          <label for="exampleFormControlTextarea1" class="form-label"></label>
+          {{form.message(class="form-control")}}
+          <br>
+          <button id="regg" type="submit" class="btn btn-primary">Submit Pitch</button>
+      </div>
+    
+    <form>
+      <div class="col-md-6">
+        <div class="jumbotron">
+          {% for pitch in pitch %}
+          <p>{{name}}</p>
+          <p class="j1"><i class="far fa-comment-alt"></i> Post Category: <span
+            class="br">{{pitch.message}}</span></p>
+          
+          <p class="j1"><i class="far fa-comment-alt"></i> Post Category: <span
+          class="br">{{pitch.category}}</span></p>
+          <p class="j3" style="float: right;"><i id="comm" class="fas fa-clock"></i> <small
+            class="br">{{pitch.created_at.strftime('%B %d, %Y %I:%M')}}</small></p>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+    </div>  
+  </div>
+  
+</body>
+</html>
+
+{% endblock %}
