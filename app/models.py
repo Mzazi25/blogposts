@@ -9,16 +9,19 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(int(user_id))
    
-class Blog(db.Model):
-    __tablename__= "blogs"
+class Blog (db.Model):
+    __tablename__= "Blog"
+    """ 
+    Added class for Blog
+    """
 
     id = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    title = db.Column(db.String(100), unique=True,nullable=False)
-    message = db.Column(db.String(), unique=True,nullable=False)
+    message = db.Column(db.String(), unique=False,nullable=False)
+    category = db.Column(db.String(20),nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow(), nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id') )
-    likes = db.relationship('Comment', backref='blogs', lazy='dynamic')
-    
+    likes = db.relationship('Comment', backref='blog', lazy='dynamic')
+
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
 
@@ -28,7 +31,7 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
-    reviews = db.relationship('Review',backref = 'user',lazy = "dynamic")
+    like = db.relationship('Comment',backref = 'users',lazy = "dynamic")
 
     @property
     def password(self):
