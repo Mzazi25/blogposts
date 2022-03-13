@@ -4,8 +4,6 @@ class Config:
     General configuration parent class
     '''
     SECRET_KEY= os.environ.get('SECRET_KEY')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://user:Mzazi25@localhost/blog'
     QUOTES_BASE_URL = 'http://quotes.stormconsultancy.co.uk/random.json'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
 
