@@ -35,7 +35,7 @@ Here a user will find everything he/she needs to create, view and a blog
 
 
 ### Live link
-Visit the application on https://d/
+Visit the application on https://blogs15.herokuapp.com/
 
 ### Development
 #### Making modifications
