@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 from ..models import User,Comment,Blog
 from .forms import UpdateProfile,BlogForm,CommentForm
 from .. import db,photos, login_manager
+import json
 
 # creating an auth instance
 @login_manager.user_loader
@@ -84,3 +85,23 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/delete-blog', methods=['POST'])
+def delete_blog():
+    blog = json.loads(request.data)
+    blogId = blog['blogId']
+    blog = Blog.query.get(blogId)
+    if blog:
+        if blog.user_id == current_user.id:
+            db.session.delete(blog)
+            db.session.commit()
+
+@main.route('/comment/<blog_id>', methods=['GET','POST'])
+def comment(blog_id):
+    
+    form = CommentForm()
+    if form.validate_on_submit():
+        new_comment = Comment(comment=form.comment.data, blog_id=blog_id,users_id=current_user.id)
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('main.profile'))
